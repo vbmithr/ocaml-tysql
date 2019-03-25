@@ -1,0 +1,11 @@
+(library
+ (name tysql)
+ (public_name tysql)
+ (modules tysql)
+ (libraries ptime))
+
+(library
+(name tysql_mdb_async)
+(public_name tysql-mdb-async)
+(modules tysql_mdb_async)
+(libraries core async uri mariadb tysql))
