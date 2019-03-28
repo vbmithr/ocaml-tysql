@@ -5,18 +5,32 @@
 
 open Async
 
-module Wait : Mariadb.Nonblocking.Wait
-  with type 'a IO.future = 'a Deferred.t
+type error = int * string
+type nonrec 'a result = ('a, error) result
 
-include module type of Mariadb.Nonblocking.Make(Wait)
+type flag =
+  | Compress
+  | Found_rows
+  | Ignore_sigpipe
+  | Ignore_space
+  | Interactive
+  | Local_files
+  | Multi_results
+  | Multi_statements
+  | No_schema
+  | Odbc
+  | Ssl
+  | Remember_options
 
-open Tysql
+type t
 
 val or_failwith : 'a result -> 'a
 
 val connect_url :
   ?socket:string -> ?flags:flag list -> Uri.t -> t result Deferred.t
 (** user:pass@host:port/db *)
+
+open Tysql
 
 type ('kind, 'e, 'where, 'order_by) prepared
 
